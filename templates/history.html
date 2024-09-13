@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Lịch sử chơi</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap CSS -->
+    <!-- Sử dụng Bootstrap CSS mới nhất -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-center mt-4">Lịch sử chơi của {{ username }}</h1>
+      {% if history %} {% if history.get('ai') %}
+      <h2 class="mt-4">Chơi với máy</h2>
+      {% for difficulty, records in history['ai'].items() %}
+      <h3 class="mt-4">Độ khó: {{ difficulty_display[difficulty] }}</h3>
+      <p>
+        Thắng: {{ records['wins'] }}, Thua: {{ records['losses'] }}, Hòa: {{
+        records['draws'] }}
+      </p>
+      {% if records['games'] %}
+      <ul class="list-group mt-2">
+        {% for result in records['games'] %}
+        <li class="list-group-item">{{ result }}</li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>Không có lịch sử chơi cho độ khó này.</p>
+      {% endif %} {% endfor %} {% endif %} {% if history.get('pvp') %}
+      <h2 class="mt-4">Chơi với người</h2>
+      <p>
+        Thắng: {{ history['pvp']['wins'] }}, Thua: {{ history['pvp']['losses']
+        }}, Hòa: {{ history['pvp']['draws'] }}
+      </p>
+      {% if history['pvp']['games'] %}
+      <ul class="list-group mt-2">
+        {% for game in history['pvp']['games'] %}
+        <li class="list-group-item">
+          Đối thủ: {{ game['opponent'] }}, Kết quả: {{ game['result'] }}, Thời
+          gian: {{ game['timestamp'] }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>Không có lịch sử chơi với người.</p>
+      {% endif %} {% endif %} {% else %}
+      <p class="mt-4">Bạn chưa có lịch sử chơi.</p>
+      {% endif %}
+      <div class="mt-4">
+        <a href="/" class="btn btn-primary">Quay lại trò chơi</a>
+      </div>
+    </div>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
